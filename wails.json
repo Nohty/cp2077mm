@@ -1,0 +1,13 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "cp2077mm",
+  "outputfilename": "cp2077mm",
+  "frontend:install": "npm install",
+  "frontend:build": "npm run build",
+  "frontend:dev:watcher": "npm run dev",
+  "frontend:dev:serverUrl": "auto",
+  "author": {
+    "name": "Daan Hautekiet",
+    "email": "daanhautekiet@gmail.com"
+  }
+}
