@@ -13,7 +13,7 @@ func InstallModArchiver(files []string, destination string) error {
 
 func InstallMod(file, destination string) error {
 	if _, err := os.Stat(destination); err == nil {
-		return fmt.Errorf("destination already exists")
+		// return fmt.Errorf("destination already exists: %s", destination)
 	} else if !os.IsNotExist(err) {
 		return fmt.Errorf("could not check destination: %w", err)
 	}

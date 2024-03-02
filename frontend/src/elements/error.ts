@@ -2,6 +2,11 @@ export function showErrorModal(message: string) {
   const body = document.querySelector("body");
   if (!body) return;
 
+  if (document.querySelector("#popup-modal-error")) {
+    const modal = document.querySelector("#popup-modal-error");
+    modal?.remove();
+  }
+
   const div = document.createElement("div");
   div.id = "popup-modal-error";
 
