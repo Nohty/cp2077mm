@@ -11,7 +11,7 @@ import (
 	"github.com/mholt/archiver/v4"
 )
 
-var validDirs = []string{"archive", "bin", "r6", "red4ext"}
+var validDirs = []string{"archive", "bin", "r6", "red4ext", "engine"}
 
 func ListArchiveContents(path string) ([]string, error) {
 	file, err := os.Open(path)
