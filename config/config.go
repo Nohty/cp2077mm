@@ -28,7 +28,7 @@ type ConfigStore struct {
 func DefaultConfig() *Config {
 	return &Config{
 		Version: "1.0",
-		GameDir: "test",
+		GameDir: "",
 		Mods:    []ModConfig{},
 	}
 }

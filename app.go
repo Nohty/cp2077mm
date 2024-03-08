@@ -62,6 +62,11 @@ func (a *App) SetGameDir(dir string) {
 		return
 	}
 
+	if dir == "" {
+		events.SendError(a.ctx, "Game dir cannot be empty")
+		return
+	}
+
 	c.GameDir = dir
 
 	err = a.config.Save(c)
@@ -105,6 +110,11 @@ func (a *App) AddMod(name, path string) {
 	c, err := a.config.Config()
 	if err != nil {
 		events.SendError(a.ctx, fmt.Sprintf("Could not load config: %s", err))
+		return
+	}
+
+	if c.GameDir == "" {
+		events.SendError(a.ctx, "Game dir is not set")
 		return
 	}
 
