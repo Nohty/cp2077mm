@@ -162,33 +162,9 @@ func (a *App) AddMod(name, path string) {
 			return
 		}
 
-		installedFiles := []string{}
-
-		for _, file := range contents {
-			destination := filepath.Join(c.GameDir, file)
-			err = manager.InstallMod(path, destination)
-			if err != nil {
-				events.SendError(a.ctx, fmt.Sprintf("Could not install mod: %s", err))
-				break
-			}
-
-			events.SendLog(a.ctx, fmt.Sprintf("Created file: %s", destination))
-
-			installedFiles = append(installedFiles, destination)
-		}
-
+		err = archiver.ExtractArchive(path, c.GameDir)
 		if err != nil {
-			events.SendError(a.ctx, fmt.Sprintf("Could not install mod: %s", err))
-
-			for _, file := range installedFiles {
-				err = manager.UninstallMod(file)
-				if err != nil {
-					events.SendError(a.ctx, fmt.Sprintf("Could not remove file: %s", err))
-				}
-
-				events.SendLog(a.ctx, fmt.Sprintf("Removed file: %s", file))
-			}
-
+			events.SendError(a.ctx, fmt.Sprintf("Could not extract archive: %s", err))
 			return
 		}
 
