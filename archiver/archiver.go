@@ -2,6 +2,7 @@ package archiver
 
 import (
 	"context"
+	"cp2077mm/events"
 	"cp2077mm/manager"
 	"fmt"
 	"os"
@@ -61,7 +62,7 @@ func ListArchiveContents(path string) ([]string, error) {
 	return files, nil
 }
 
-func ExtractArchive(path, destination string) error {
+func ExtractArchive(ctx context.Context, path, destination string) error {
 	file, err := os.Open(path)
 	if err != nil {
 		return fmt.Errorf("could not open the archive file: %w", err)
@@ -79,7 +80,7 @@ func ExtractArchive(path, destination string) error {
 	}
 
 	var files []string
-	err = extractor.Extract(context.Background(), file, nil, func(ctx context.Context, f archiver.File) error {
+	err = extractor.Extract(context.Background(), file, nil, func(c context.Context, f archiver.File) error {
 		if !f.IsDir() {
 			var modifiedName string
 			if filepath.Ext(f.NameInArchive) == ".archive" && !strings.Contains(f.NameInArchive, "/") {
@@ -109,6 +110,8 @@ func ExtractArchive(path, destination string) error {
 				if err != nil {
 					return fmt.Errorf("could not install mod: %w", err)
 				}
+
+				events.SendLog(ctx, fmt.Sprintf("Created file: %s", modifiedName))
 
 				files = append(files, modifiedName)
 			}

@@ -162,7 +162,7 @@ func (a *App) AddMod(name, path string) {
 			return
 		}
 
-		err = archiver.ExtractArchive(path, c.GameDir)
+		err = archiver.ExtractArchive(a.ctx, path, c.GameDir)
 		if err != nil {
 			events.SendError(a.ctx, fmt.Sprintf("Could not extract archive: %s", err))
 			return
